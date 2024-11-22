@@ -1,0 +1,52 @@
+class Node:
+    def __init__(self,data):
+        self.data=data
+        self.next=None
+        
+class queue:
+    def __init__(self):
+        self.rear=None
+        self.front=None
+        
+    def enqueue(self,data):
+        new=Node(data)
+        if self.front is None:
+            self.front=new
+
+        else:
+            n=self.front
+            while n.next is not None:
+                n=n.next
+            n.next=new
+
+            
+    def dequeue(self):
+        if self.front is None:
+            print("No element present")
+        elif self.front.next is None:
+            print("Popped Element is:,",self.front.data)
+            self.front=None
+        else:
+            temp=self.front
+            print("Popped element is:",self.front.data)
+            self.front=temp.next
+            temp=None
+    
+    def display(self):
+        if self.front is None:
+            print("Print queue is empty")
+        else:
+            n=self.front
+            while n is not None:
+                print(n.data,"<--",end=" ")
+                n=n.next
+            print("None")
+q=queue()
+q.enqueue(10)
+q.enqueue(20)
+q.enqueue(30)
+q.enqueue(40)
+q.display()
+q.dequeue()
+q.dequeue()
+q.display()        
