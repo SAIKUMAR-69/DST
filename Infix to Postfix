@@ -1,0 +1,32 @@
+def precedence(op):
+    if op == '+' or op == '-':
+        return 1
+    elif op == '*' or op == '/':
+        return 2
+    else:
+        return 0
+    
+def in_to_post(exp):
+    stack=[]
+    postfix=[]
+    for char in exp:
+        if char.isalnum():
+            postfix.append(char)
+        elif char == '(':
+            stack.append(char)
+        elif char == ')':
+            while stack and stack[-1]!='(':
+                postfix.append(stack.pop())
+            stack.pop()
+        else:
+            while(stack and precedence(stack[-1])>=precedence(char)):
+                postfix.append(stack.pop())
+            stack.append(char)
+            
+    while stack:
+        postfix.append(stack.pop())
+    return ''.join(postfix)
+
+exp="A*(B+C)/D"
+output=in_to_post(exp)
+print(f"Infix:{exp}\nPostfix:{output}")
