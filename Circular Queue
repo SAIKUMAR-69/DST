@@ -1,0 +1,59 @@
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+class CircularQueue:
+    def __init__(self):
+        self.tail = None  
+
+    def is_empty(self):
+        return self.tail is None
+
+    def enqueue(self, data):
+        new_node = Node(data)
+        if self.is_empty():
+            self.tail = new_node
+            self.tail.next = new_node
+        else:
+            new_node.next = self.tail.next
+            self.tail.next = new_node
+            self.tail = new_node
+
+    def dequeue(self):
+        if self.is_empty():
+            raise Exception("Queue is empty")
+        head = self.tail.next
+        if self.tail == head:
+            self.tail = None
+        else:            
+            self.tail.next = head.next
+        return head.data
+
+    def display(self):        
+        if self.is_empty():
+            print("Queue is empty")
+            return
+        current = self.tail.next
+        elements = []
+        while True:
+            elements.append(current.data)
+            if current == self.tail:
+                break
+            current = current.next
+        print("Queue elements:", " -> ".join(map(str, elements)))
+
+
+cq = CircularQueue()
+
+cq.enqueue(10)
+cq.enqueue(20)
+cq.enqueue(30)
+cq.display()
+
+print("Dequeued:", cq.dequeue())
+cq.display()
+   
+cq.enqueue(40)
+cq.enqueue(50)
+cq.display()
