@@ -1,0 +1,64 @@
+class Node:
+    def __init__(self, data, priority):
+        self.data = data        
+        self.priority = priority  
+        self.next = None        
+
+class PriorityQueue:
+    def __init__(self):
+        self.front = None  
+
+    
+    def is_empty(self):
+        return self.front is None
+
+    def insert(self, data, priority):
+        new_node = Node(data, priority)
+        
+        if self.is_empty() or priority > self.front.priority:
+            new_node.next = self.front
+            self.front = new_node
+        else:
+            current = self.front
+            while current.next and priority <= current.next.priority:
+                current = current.next
+            new_node.next = current.next
+            current.next = new_node
+
+    def delete(self):
+        if self.is_empty():
+            print("Priority Queue is empty! Cannot delete.")
+            return
+        else:
+            removed_node=self.front
+            self.front = self.front.next
+            return removed_node.data
+
+    def display(self):
+        if self.is_empty():
+            print("Priority Queue is empty!")
+            return
+        current = self.front
+        while current:
+            print(f"Data: {current.data}, Priority: {current.priority}")
+            current = current.next
+
+
+
+pq = PriorityQueue()
+
+pq.insert("Task1", 3)
+pq.insert("Task2", 1)
+pq.insert("Task3", 2)
+pq.insert("Task4", 4)
+
+print("Priority Queue after insertions:")
+pq.display()  
+
+pq.delete()
+print("\nPriority Queue after deleting the highest priority element:")
+pq.display()  
+
+pq.delete()
+print("\nPriority Queue after another deletion:")
+pq.display()   
