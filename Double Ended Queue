@@ -1,0 +1,91 @@
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.prev = None
+        self.next = None
+
+class Deque:
+    def __init__(self):
+        self.front = None
+        self.rear = None
+
+    def is_empty(self):
+        return self.front is None
+
+    def insert_front(self, data):
+        new_node = Node(data)
+        if self.is_empty():
+            self.front = self.rear = new_node
+        else:
+            new_node.next = self.front
+            self.front.prev = new_node
+            self.front = new_node
+
+    def insert_rear(self, data):
+        new_node = Node(data)
+        if self.is_empty():
+            self.front = self.rear = new_node
+        else:
+            new_node.prev = self.rear
+            self.rear.next = new_node
+            self.rear = new_node
+
+    def delete_front(self):
+        if self.is_empty():
+            print("Deque is empty! Cannot delete from front.")
+            return
+        if self.front == self.rear:
+            self.front = self.rear = None
+        else:
+            self.front = self.front.next
+            self.front.prev = None
+
+    def delete_rear(self):
+        if self.is_empty():
+            print("Deque is empty! Cannot delete from rear.")
+            return
+        if self.front == self.rear:
+            self.front = self.rear = None
+        else:
+            self.rear = self.rear.prev
+            self.rear.next = None
+
+    def display(self):
+        if self.is_empty():
+            print("Deque is empty!")
+            return
+        current = self.front
+        while current:
+            print(current.data, end=" ")
+            current = current.next
+        print()
+
+    def display_reverse(self):
+        if self.is_empty():
+            print("Deque is empty!")
+            return
+        current = self.rear
+        while current:
+            print(current.data, end=" ")
+            current = current.prev
+        print()
+
+
+deque = Deque()
+
+deque.insert_front(10)
+deque.insert_front(20)
+deque.insert_rear(30)
+deque.insert_rear(40)
+
+print("Deque after insertions:")
+deque.display()  
+deque.display_reverse()  
+
+   
+deque.delete_front()
+deque.delete_rear()
+
+print("\nDeque after deletions:")
+deque.display()  
+deque.display_reverse()  
