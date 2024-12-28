@@ -1,0 +1,77 @@
+class Node:
+    def __init__(self, key):
+        self.left = None
+        self.right = None
+        self.value = key
+
+
+class BinarySearchTree:
+    def __init__(self):
+        self.root = None
+
+    def insert(self, key):
+        """Insert a new node with the given key into the BST."""
+        if self.root is None:
+            self.root = Node(key)
+        else:
+            self._insert_recursive(self.root, key)
+
+    def _insert_recursive(self, node, key):
+        """Helper method to insert a new node recursively."""
+        if key < node.value:
+            if node.left is None:
+                node.left = Node(key)
+            else:
+                self._insert_recursive(node.left, key)
+        else:
+            if node.right is None:
+                node.right = Node(key)
+            else:
+                self._insert_recursive(node.right, key)
+
+    def inorder(self, node):
+        """Inorder Traversal (Left, Root, Right)"""
+        if node:
+            self.inorder(node.left)
+            print(node.value, end=' ')
+            self.inorder(node.right)
+
+    def preorder(self, node):
+        """Preorder Traversal (Root, Left, Right)"""
+        if node:
+            print(node.value, end=' ')
+            self.preorder(node.left)
+            self.preorder(node.right)
+
+    def postorder(self, node):
+        """Postorder Traversal (Left, Right, Root)"""
+        if node:
+            self.postorder(node.left)
+            self.postorder(node.right)
+            print(node.value, end=' ')
+
+    def display_inorder(self):
+        print("Inorder Traversal:", end=' ')
+        self.inorder(self.root)
+        print()
+
+    def display_preorder(self):
+        print("Preorder Traversal:", end=' ')
+        self.preorder(self.root)
+        print()
+
+    def display_postorder(self):
+        print("Postorder Traversal:", end=' ')
+        self.postorder(self.root)
+        print()
+        
+bst = BinarySearchTree()
+# Inserting values into the BST
+values = [50, 30, 20, 40, 70, 60, 80]
+for value in values:
+    bst.insert(value)
+
+# Display tree traversals
+bst.display_inorder()
+bst.display_preorder()
+bst.display_postorder()
